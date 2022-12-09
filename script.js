@@ -92,7 +92,7 @@ const displayMovements = function (arr) {
     containerMovements.insertAdjacentHTML('afterbegin', movementsHTML);
   });
 };
-displayMovements(movements);
+displayMovements(account1.movements);
 
 // Summary 구현 함수(로그인 X)
 const displaySummary = function () {
@@ -110,6 +110,22 @@ const displaySummary = function () {
 };
 
 displaySummary();
+
+/*
+  calcDisplayBalance 함수
+     - class="balance__value" 태그에 현재 계좌의 
+       총액을 표기 
+       
+*/
+
+const calcDisplayBalance = function (arr) {
+  const balance = arr.reduce((acc, v) => {
+    return acc + v;
+  }, 0);
+  labelBalance.textContent = `${balance}€`;
+};
+
+calcDisplayBalance(account1.movements);
 
 /*
     user id 산출
