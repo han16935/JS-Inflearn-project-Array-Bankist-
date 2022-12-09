@@ -1,0 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.square {
+  width: 100%;
+  height: 60%;
+  border: 1px solid black;
+  background-color: black;
+}
+
+.element {
+  background-color: green;
+  height: 10%;
+}

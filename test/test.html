@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="flex">
+      <div class="test">
+        <div class="square">
+          <div class="element">aaa</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const arr = [1, 2, 3, 4];
+      const square = document.querySelector('.square');
+      const inputHTMLtag = function (element) {
+        const willInputtedElement = `<div class="element">${element}</div>`;
+        square.insertAdjacentHTML('beforebegin', willInputtedElement);
+      };
+      arr.forEach(function (v, i) {
+        inputHTMLtag(v);
+      });
+    </script>
+  </body>
+</html>
