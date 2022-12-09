@@ -95,7 +95,7 @@ const displayMovements = function (arr) {
 displayMovements(account1.movements);
 
 // Summary 구현 함수(로그인 X)
-const displaySummary = function () {
+const displaySummary = function (account) {
   let depositSum = 0;
   let withdrawlSum = 0;
   const movementsArr = document.querySelectorAll('.movements__value');
@@ -107,9 +107,12 @@ const displaySummary = function () {
   });
   labelSumIn.textContent = `${depositSum}€`;
   labelSumOut.textContent = `${-withdrawlSum}€`;
+  labelSumInterest.textContent = `${
+    (depositSum * account.interestRate) / 100
+  }€`;
 };
 
-displaySummary();
+displaySummary(account1);
 
 /*
   calcDisplayBalance 함수
