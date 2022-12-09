@@ -79,11 +79,12 @@ containerApp.style.opacity = 1;
 
 // 입금, 출금 내역 표시 함수
 const displayMovements = function (arr) {
+  containerMovements.innerHTML = '';
   arr.forEach(function (money, i) {
     const type = money > 0 ? 'deposit' : 'withdrawal';
     const movementsHTML = `<div class="movements__row">
   <div class="movements__type movements__type--${type}">${
-      i + 3
+      i + 1
     } ${type.toUpperCase()}</div>
   <div class="movements__date">3 days ago</div>
   <div class="movements__value">${money}€</div>
@@ -109,3 +110,22 @@ const displaySummary = function () {
 };
 
 displaySummary();
+
+/*
+    user id 산출
+      - user 객체에서 owner 속성을 가져와 이름 첫 글자의 소문자로 이루어진 문자열을 만들어 username 속성 만들기
+
+      ex) 'Jonas Schmedtmann' => js
+*/
+
+const createUserName = function (accArr) {
+  accArr.forEach(function (user, i) {
+    user.username = user.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+
+createUserName(accounts);
