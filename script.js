@@ -53,7 +53,9 @@ const btnLoan = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
 const btnSort = document.querySelector('.btn--sort');
 
+// inputLoginUsername.value에는 form 내부 txt가 저장
 const inputLoginUsername = document.querySelector('.login__input--user');
+// inputLoginUserPin.value에는 form 내부 txt가 저장
 const inputLoginPin = document.querySelector('.login__input--pin');
 const inputTransferTo = document.querySelector('.form__input--to');
 const inputTransferAmount = document.querySelector('.form__input--amount');
@@ -75,12 +77,11 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 // nav 아래 보이도록
-containerApp.style.opacity = 1;
 
 // 입금, 출금 내역 표시 함수
-const displayMovements = function (arr) {
+const displayMovements = function (user) {
   containerMovements.innerHTML = '';
-  arr.forEach(function (money, i) {
+  user.movements.forEach(function (money, i) {
     const type = money > 0 ? 'deposit' : 'withdrawal';
     const movementsHTML = `<div class="movements__row">
   <div class="movements__type movements__type--${type}">${
@@ -92,9 +93,13 @@ const displayMovements = function (arr) {
     containerMovements.insertAdjacentHTML('afterbegin', movementsHTML);
   });
 };
-displayMovements(account1.movements);
 
-// Summary 구현 함수(로그인 X)
+/* Summary 구현 함수(로그인 X)
+   - summary의 value--in : deposit의 합,
+   - summary의 value--out : withdrawl의 합,
+   - summary의 value--interest : interest의 합  
+*/
+
 const displaySummary = function (account) {
   let depositSum = 0;
   let withdrawlSum = 0;
@@ -112,23 +117,18 @@ const displaySummary = function (account) {
   }€`;
 };
 
-displaySummary(account1);
-
 /*
   calcDisplayBalance 함수
      - class="balance__value" 태그에 현재 계좌의 
        총액을 표기 
-       
 */
 
-const calcDisplayBalance = function (arr) {
-  const balance = arr.reduce((acc, v) => {
+const calcDisplayBalance = function (user) {
+  const balance = user.movements.reduce((acc, v) => {
     return acc + v;
   }, 0);
   labelBalance.textContent = `${balance}€`;
 };
-
-calcDisplayBalance(account1.movements);
 
 /*
     user id 산출
@@ -148,3 +148,25 @@ const createUserName = function (accArr) {
 };
 
 createUserName(accounts);
+
+//
+btnLogin.addEventListener('click', function (e) {
+  // button 태그에 type='submit' 입력하면 엔터 버튼 누름에 반응
+  e.preventDefault(); // 브라우저가 'click' 동작에 대해 기본적인 반응을 하지 않도록(위 코드가 없으면 click이 잠깐 출력되다가 없어짐(prevent form from submitting))
+  const inputId = inputLoginUsername.value;
+  const inputPw = Number(inputLoginPin.value);
+  const user = accounts.find(
+    account => account.username === inputId && account.pin === inputPw
+  );
+  if (!user) console.log(`Please write valid data.`);
+  else {
+    containerApp.style.opacity = 1;
+    labelWelcome.textContent = `Welcome Back, ${user.owner.split(' ')[0]}`;
+    displayMovements(user);
+    displaySummary(user);
+    calcDisplayBalance(user);
+    inputLoginUsername.value = '';
+    inputLoginPin.value = '';
+    inputLoginPin.blur(); // 로그인 후 pin form 에서 커서 깜박거리는 것을 없애줌
+  }
+});
