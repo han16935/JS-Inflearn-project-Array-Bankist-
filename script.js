@@ -170,3 +170,25 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginPin.blur(); // 로그인 후 pin form 에서 커서 깜박거리는 것을 없애줌
   }
 });
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const transferToUserName = inputTransferTo.value;
+  const transferMoney = Number(inputTransferAmount.value);
+  const transferToUser = accounts.find(
+    (account, i) => account.owner === transferToUserName
+  );
+  console.log(transferToUser);
+  const type = transferMoney > 0 ? 'deposit' : 'withdrawl';
+  /*
+  if (type === 'deposit') {
+    user.movements.push(transferMoney);
+    transferToUser.movements.push(-transferMoney);
+  }
+
+  if (type === 'withdrawl') {
+    user.movements.push(-transferMoney);
+    transferToUser.movements.push(-transferMoney);
+  }
+  */
+});
